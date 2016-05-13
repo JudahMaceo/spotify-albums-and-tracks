@@ -11,9 +11,9 @@ h1, h2, h3{
 	line-height:1.2
 }
 
-/*#q-results li,*/
-/*#albums li {
+#q-results li,
+#albums li {
 	color: #006fff;
 	cursor: pointer;
 	text-decoration: underline;
-}*/
+}

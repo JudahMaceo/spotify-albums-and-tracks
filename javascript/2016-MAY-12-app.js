@@ -93,25 +93,63 @@ function displayAlbumsAndTracks(event) {
       albumNameLi.attr("data-spotify-album-id", album.id);
       appendToMe.append(albumNameLi);
 
-      // albumNameLi.click(displayTracks)
+      albumNameLi.click(displayTracks)
     });
     //for each loop
+  });
+  //done close
+
+  albumRequest.fail(function(error) {
+    console.log("Something Failed During Album Request:")
+    console.log(error);
+  });
+
+}
+//function close
+
+function displayTracks(event){
+
+  //event target attr get album id
+  var albumId = $(event.target).attr("data-spotify-album-id");
+  console.log(albumId);
+
+  var trackRequest;
+  var tracksUrl = "https://api.spotify.com/v1/albums/" + albumId + "/tracks";
+
+  var trackRequest = $.ajax({
+      type: "GET",
+      dataType: 'json',
+      url: tracksUrl
+  });
+
+  trackRequest.done(function(data){
+    var tracks = data.items;
+    // console.log(tracks);
+    var appendToMe = $("#tracks");
+    appendToMe.html("");
+
+    tracks.forEach(function(track) {
+      console.log(track.name);
+      var trackLi = $("<li>" + track.name + "</li>");
+      trackLi.attr("data-spotify-track-name", track.name)
+      appendToMe.append(trackLi);
 
 
-    // for(i = 0; i < albums.length; i++){
-    //   var albumName = (albums[i].name);
-    //   var albumNameUl = $("<ul>" + albumName + "</ul>");
-    //   appendToMe.append(albumNameUl);
-    //   var albumIds = albums[i].id;
-    //   console.log(albumIds);
 
-    //inside of the album loop make another loop for tracks
-      //so each time we find an album and print it, we also print the tracks for that album
-        //so ajax call for tracks will go inside of this loop in order to get the tracks
+    });
+    //for each close
+
+  });
+  //done close
+    // var appendToMe = $("#tracks");
 
 
+}
 
-    //
+
+
+
+
     // var tracksRequest = $.ajax({
     //   type: "GET",
     //   dataType: 'json',
@@ -127,15 +165,3 @@ function displayAlbumsAndTracks(event) {
     //
     //   });
       //done close
-
-
-
-
-    // }
-    // //for loop close
-
-  });
-  //done close
-
-}
-//function close
