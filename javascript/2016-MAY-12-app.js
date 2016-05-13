@@ -1,3 +1,4 @@
+console.log("hello from may 12 app js");
 // Self envoking function! once the document is ready, bootstrap our application.
 // We do this to make sure that all the HTML is rendered before we do things
 // like attach event listeners and any dom manipulation.

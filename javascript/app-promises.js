@@ -1,14 +1,23 @@
-console.log("hello from app js 1");// Self envoking function! once the document is ready, bootstrap our application.
+console.log("hello from app promises js");
+// Self envoking function! once the document is ready, bootstrap our application.
 // We do this to make sure that all the HTML is rendered before we do things
 // like attach event listeners and any dom manipulation.
+//(galvanize comment)
+
+//(my comment)
+//function call to run program below once the DOM is loaded and ready
+  //specifically the 'function', whichs runs everything below it, calls another function (bootstrap spotify search)
+    //boostrap spotify search will call the function below it and so on, down the chain of promises
 (function(){
   $(document).ready(function(){
     bootstrapSpotifySearch();
   })
 })();
 
+
 /**
   This function bootstraps the spotify request functionality.
+(galvanize comment)
 */
 function bootstrapSpotifySearch(){
 
