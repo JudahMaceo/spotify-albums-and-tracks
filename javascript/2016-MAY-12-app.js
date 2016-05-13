@@ -32,6 +32,7 @@ function bootstrapSpotifySearch() {
     // (We could have used the success callback directly)
     spotifyQueryRequest.done(function(data) {
       var artists = data.artists;
+      // console.log(artists);
 
       // Clear the output area
       outputArea.html('');
@@ -60,12 +61,18 @@ function bootstrapSpotifySearch() {
 
 /* COMPLETE THIS FUNCTION! */
 function displayAlbumsAndTracks(event) {
-  var appendToMe = $('#albums-and-tracks');
+  var appendToMe = $('#albums');
 
 
   // These two lines can be deleted. They're mostly for show.
   console.log("you clicked on:");
+
+//play around with this to fully understand event.target etc.
+  console.log(event);
+
+//attr works like this: one argument means it is getting the data...
   var artistId = $(event.target).attr('data-spotify-id');
+
 
   var albumRequest = $.ajax({
     type: "GET",
@@ -75,13 +82,28 @@ function displayAlbumsAndTracks(event) {
 
   albumRequest.done(function(data){
     var albums = data.items;
+    // console.log(albums);
 
-    for(i = 0; i < albums.length; i++){
-      var albumName = (albums[i].name);
-      var albumNameUl = $("<ul>" + albumName + "</ul>");
-      appendToMe.append(albumNameUl);
-      var albumIds = albums[i].id;
-      console.log(albumIds);
+
+    albums.forEach(function(album){
+      var albumName = album.name;
+      // var artistLi = $("<li>" + artist.name + " - " + artist.id +
+      //   "</li>")
+      var albumNameLi = $("<li>" + album.name + "</li>");
+      albumNameLi.attr("data-spotify-album-id", album.id);
+      appendToMe.append(albumNameLi);
+
+      // albumNameLi.click(displayTracks)
+    });
+    //for each loop
+
+
+    // for(i = 0; i < albums.length; i++){
+    //   var albumName = (albums[i].name);
+    //   var albumNameUl = $("<ul>" + albumName + "</ul>");
+    //   appendToMe.append(albumNameUl);
+    //   var albumIds = albums[i].id;
+    //   console.log(albumIds);
 
     //inside of the album loop make another loop for tracks
       //so each time we find an album and print it, we also print the tracks for that album
@@ -90,27 +112,27 @@ function displayAlbumsAndTracks(event) {
 
 
     //
-    var tracksRequest = $.ajax({
-      type: "GET",
-      dataType: 'json',
-      url: 	"https://api.spotify.com/v1/albums/" + albumIds + "/tracks"
-    });
-    //ajax
-
-      tracksRequest.done(function(data){
-
-        for(j = 0; j < data.items.length; j++){
-            console.log(data.items[j].name);
-        }
-
-      });
+    // var tracksRequest = $.ajax({
+    //   type: "GET",
+    //   dataType: 'json',
+    //   url: 	"https://api.spotify.com/v1/albums/" + albumIds + "/tracks"
+    // });
+    // //ajax
+    //
+    //   tracksRequest.done(function(data){
+    //
+    //     for(j = 0; j < data.items.length; j++){
+    //         console.log(data.items[j].name);
+    //     }
+    //
+    //   });
       //done close
 
 
 
 
-    }
-    //for loop close
+    // }
+    // //for loop close
 
   });
   //done close
